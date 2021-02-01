@@ -1,0 +1,31 @@
+{
+  "name": "@attus/angular-client",
+  "description": "Angular Client for Web API (e.g. Drupal) Services",
+  "version": "1.0.0",
+  "peerDependencies": {
+    "@angular/common": "^10.0 || ^11.0",
+    "@angular/core": "^10.0 || ^11.0"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0" 
+  },
+  "homepage": "https://github.com/attus74/angular-client",
+  "author": {
+    "name": "Attila Németh",
+    "email": "attus@germanicus.hu"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/attus74/angular-client.git"
+  },
+  "bugs": {
+    "url": "https://github.com/attus74/angular-client/issues"
+  },
+  "keywords": [
+    "Angular",
+    "API",
+    "Client",
+    "Drupal"
+  ],
+  "license": "GPL-3.0"
+}
