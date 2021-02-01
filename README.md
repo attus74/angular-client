@@ -11,6 +11,9 @@ Environment (details see below) and a token service (Ionic Storage, Cookie Servi
 
 ### Angular Example
 
+```
+npm i @attus/cookie-service
+```
 ```ts
 import { AngularClientModule } from '@attus/angular-client';
 import { CookieTokenServiceService } from '@attus/cookie-service';
