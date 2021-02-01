@@ -97,8 +97,11 @@ export class AngularClient {
       requestOptions = new AngularClientRequestOptions;
       requestOptions.retry = 5;
     }
-    const request = new HttpRequest('GET', this.getUrl(path), null, httpOptions);
-    return this.httpRequest(request, requestOptions);
+    return this.http.get(this.getUrl(path), httpOptions).pipe(
+      retry(requestOptions.retry),
+      timeout(requestOptions.timeout),
+      catchError(this.formatErrors),
+    );
   }
 
   /**
@@ -115,8 +118,11 @@ export class AngularClient {
       requestOptions = new AngularClientRequestOptions;
       requestOptions.timeout = 30000;
     }
-    const request = new HttpRequest('POST', this.getUrl(path), data, httpOptions);
-    return this.httpRequest(request, requestOptions);
+    return this.http.post(this.getUrl(path), data, httpOptions).pipe(
+      retry(requestOptions.retry),
+      timeout(requestOptions.timeout),
+      catchError(this.formatErrors),
+    );
   }
 
   /**
@@ -133,45 +139,34 @@ export class AngularClient {
       requestOptions = new AngularClientRequestOptions;
       requestOptions.timeout = 30000;
     }
-    const request = new HttpRequest('PATCH', this.getUrl(path), data, httpOptions);
-    return this.httpRequest(request, requestOptions);
+    return this.http.patch(this.getUrl(path), data, httpOptions).pipe(
+      retry(requestOptions.retry),
+      timeout(requestOptions.timeout),
+      catchError(this.formatErrors),
+    );
   }
 
   /**
    * HTTP DELETE Request
    * @param path 
    *  Request Path, related to API Root
-   * @param data 
    * @param httpOptions 
    * @param requestOptions 
    */
-  delete(path: string, data: any, httpOptions?: AngularClientHttpOptions, requestOptions?: AngularClientRequestOptions): Observable<any> {
+  delete(path: string, httpOptions?: AngularClientHttpOptions, requestOptions?: AngularClientRequestOptions): Observable<any> {
     if (requestOptions === null || requestOptions === undefined) {
       requestOptions = new AngularClientRequestOptions;
       requestOptions.retry = 1;
     }
-    const request = new HttpRequest('PATCH', this.getUrl(path), data, httpOptions);
-    return this.httpRequest(request, requestOptions);
+    return this.http.delete(this.getUrl(path), httpOptions).pipe(
+      retry(requestOptions.retry),
+      timeout(requestOptions.timeout),
+      catchError(this.formatErrors),
+    );
   }
 
   private getUrl(path: string): string {
     return this.clientConfig.url + '/' + path.replace(/^\//g, '');
-  }
-
-  private httpRequest(request: HttpRequest<string>, options: AngularClientRequestOptions): Observable<any> {
-    return  this.http.request(request).pipe(
-      retry(options.retry),
-      timeout(options.timeout),
-      catchError(this.formatErrors),
-      map((response: any) => {
-        if (response instanceof HttpResponse) {
-          return response.body;
-        }
-        else {
-          return response;
-        }
-      })
-    );
   }
 
   private refreshToken(): void {
