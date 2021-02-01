@@ -13,6 +13,7 @@ Environment (details see below) and a token service (Ionic Storage, Cookie Servi
 
 ```ts
 import { AngularClientModule } from '@attus/angular-client';
+import { CookieTokenServiceService } from '@attus/cookie-service';
 
 import { environment } from '../environments/environment';
 
@@ -22,12 +23,12 @@ import { environment } from '../environments/environment';
   ],
   providers: [
     {
-      provide: 'DRUPAL_TOKEN_SERVICE',
-      useClass: IonicTokenService,
+      provide: 'ANGULAR_CLIENT_TOKEN_SERVICE',
+      useClass: CookieTokenServiceService,
     },
     {
-      provide: 'DRUPAL_CONFIG',
-      useValue: environment.drupal,
+      provide: 'ANGULAR_CLIENT_CONFIG',
+      useValue: environment.apiClient,
     }
   ],
   bootstrap: [AppComponent]
@@ -35,11 +36,11 @@ import { environment } from '../environments/environment';
 export class AppModule {}
 ```
 
-Environment must have Drupal connection parameters:
+Environment must have API connection parameters:
 ```ts
 export const environment = {
   production: false,
-  drupal: {
+  apiClient: {
     url: 'https://example.com',
     token_path: 'oauth/token',
     client_id: 'abcdefgh-1234',
