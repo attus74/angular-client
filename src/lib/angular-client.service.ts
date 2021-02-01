@@ -25,7 +25,7 @@ export class AngularClient {
 
   constructor(private http: HttpClient,
               @Inject('ANGULAR_CLIENT_TOKEN_SERVICE') private tokenService: AngularClientTokenService,
-              @Inject('ANGULAR_CLIENT_CONFIG') private drupalConfig: AngularClientApiConfig) { }
+              @Inject('ANGULAR_CLIENT_CONFIG') private clientConfig: AngularClientApiConfig) { }
 
   initialize() {
     this.refreshToken();
@@ -43,9 +43,9 @@ export class AngularClient {
   login(username: string, password: string): void {
     const request: AngularClientTokenRequest = {
       grant_type: 'password',
-      client_id: this.drupalConfig.client_id,
-      client_secret: this.drupalConfig.client_secret,
-      scope: this.drupalConfig.scope,
+      client_id: this.clientConfig.client_id,
+      client_secret: this.clientConfig.client_secret,
+      scope: this.clientConfig.scope,
       username: username,
       password: password,
     };
@@ -97,7 +97,7 @@ export class AngularClient {
       requestOptions = new AngularClientRequestOptions;
       requestOptions.retry = 5;
     }
-    const request = new HttpRequest('GET', path, null, httpOptions);
+    const request = new HttpRequest('GET', this.getUrl(path), null, httpOptions);
     return this.httpRequest(request, requestOptions);
   }
 
@@ -115,7 +115,7 @@ export class AngularClient {
       requestOptions = new AngularClientRequestOptions;
       requestOptions.timeout = 30000;
     }
-    const request = new HttpRequest('POST', path, data, httpOptions);
+    const request = new HttpRequest('POST', this.getUrl(path), data, httpOptions);
     return this.httpRequest(request, requestOptions);
   }
 
@@ -133,7 +133,7 @@ export class AngularClient {
       requestOptions = new AngularClientRequestOptions;
       requestOptions.timeout = 30000;
     }
-    const request = new HttpRequest('PATCH', path, data, httpOptions);
+    const request = new HttpRequest('PATCH', this.getUrl(path), data, httpOptions);
     return this.httpRequest(request, requestOptions);
   }
 
@@ -150,8 +150,12 @@ export class AngularClient {
       requestOptions = new AngularClientRequestOptions;
       requestOptions.retry = 1;
     }
-    const request = new HttpRequest('PATCH', path, data, httpOptions);
+    const request = new HttpRequest('PATCH', this.getUrl(path), data, httpOptions);
     return this.httpRequest(request, requestOptions);
+  }
+
+  private getUrl(path: string): string {
+    return this.clientConfig.url + '/' + path.replace(/^\//g, '');
   }
 
   private httpRequest(request: HttpRequest<string>, options: AngularClientRequestOptions): Observable<any> {
@@ -170,8 +174,8 @@ export class AngularClient {
       else {
         const request: AngularClientTokenRequest = {
           grant_type: 'refresh_token',
-          client_id: this.drupalConfig.client_id,
-          client_secret: this.drupalConfig.client_secret,
+          client_id: this.clientConfig.client_id,
+          client_secret: this.clientConfig.client_secret,
           refresh_token: token,
         };
         this.getToken(request);
@@ -188,7 +192,7 @@ export class AngularClient {
     for (let key in request) {
       formData.set(key, request[key]);
     }
-    this.http.post(this.drupalConfig.url + '/' + this.drupalConfig.token_path, formData).pipe(
+    this.http.post(this.clientConfig.url + '/' + this.clientConfig.token_path, formData).pipe(
       retry(3),
       timeout(16000),
       catchError(error => {
