@@ -57,7 +57,7 @@ export const environment = {
 
 ```ts
 
-import {DrupalService} from '@attus/drupal';
+import { AngularClient, AngularClientHttpOptions } from '@attus/angular-client';
 
 @Component({
   template: '',
@@ -67,26 +67,29 @@ export class MyComponent implements OnInit {
   data: MyData
   userSubscription: Subscription
 
-  constructor(private drupal: DrupalService) { }
+  constructor(private apiClient: AngularClient) { }
 
   ngOnInit() {
     // Status: 1 - Authenticated, 0 - In process, -1 - Not Authenticated
-    this.userSubscription = this.drupal.getUserLoginStatus().subscribe(status => {
+    this.userSubscription = this.apiClient.getUserLoginStatus().subscribe(status => {
       if (status === 1) {
-        this.getMyData();
+        this.getMyData().subscribe(data => {
+          this.data = data;
+        });
       }
     });
   }
 
   getMyData(id: string): Observable<MyData> {
-    const options = this.drupal.getHttpOptions();
+    const options = this.apiClient.getHttpOptions();
+    options.setAuthorization();
     const path: string = 'my/data/' + id;
     return this.drupal.get(path, options);
   }
 
   loginUser(username: string, password: string): void {
     // There is no direct answer, but you can subscribe the result, see getUserLoginStatus()
-    this.drupal.login(username, password);
+    this.apiClient.login(username, password);
   }
 
 }
