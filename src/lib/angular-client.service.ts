@@ -154,7 +154,7 @@ export class AngularClient {
     return this.httpRequest(request, requestOptions);
   }
 
-  private httpRequest(request: HttpRequest, options: AngularClientRequestOptions): Observable<any> {
+  private httpRequest(request: HttpRequest<string>, options: AngularClientRequestOptions): Observable<any> {
     return  this.http.request(request).pipe(
       retry(options.retry),
       timeout(options.timeout),

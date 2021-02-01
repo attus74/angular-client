@@ -9,15 +9,16 @@
 This modul has to be imported. 
 Environment (details see below) and a token service (Ionic Storage, Cookie Service, or something similar, custom services, too, are allowed), too, has to be imported and provided to this service. In the readme you find examples for an Angular and an Ionic Token service. 
 
-```ts
-import { DrupalModule } from '@attus/drupal';
+### Angular Example
 
-import { IonicTokenService } from '@attus/ionic-storage';
+```ts
+import { AngularClientModule } from '@attus/angular-client';
+
 import { environment } from '../environments/environment';
 
 @NgModule({
   imports: [
-    DrupalModule,
+    AngularClientModule,
   ],
   providers: [
     {
