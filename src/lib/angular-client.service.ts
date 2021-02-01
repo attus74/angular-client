@@ -5,10 +5,10 @@
  * @date 1.2.2021
  */
 
-import { HttpClient, HttpErrorResponse, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError, TimeoutError } from 'rxjs';
-import { catchError, retry, timeout } from 'rxjs/operators';
+import { catchError, retry, timeout, map } from 'rxjs/operators';
 import { AngularClientApiConfig } from './model/api_config';
 import { AngularClientHttpOptions, AngularClientRequestOptions } from './model/http_options';
 import { AngularClientTokenRequest, AngularClientTokenResponse } from './model/token_request';
@@ -162,7 +162,15 @@ export class AngularClient {
     return  this.http.request(request).pipe(
       retry(options.retry),
       timeout(options.timeout),
-      catchError(this.formatErrors)
+      catchError(this.formatErrors),
+      map((response: any) => {
+        if (response instanceof HttpResponse) {
+          return response.body;
+        }
+        else {
+          return response;
+        }
+      })
     );
   }
 
