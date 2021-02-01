@@ -4,8 +4,10 @@
 
 ## A library for Angular as Web API Client
 
+**This library may be applied n Angular 10 (Ionic included) or 11.**
+
 This modul has to be imported. 
-Environment (details see below) and a token service (Ionic Storage, Cookie Service, or something similar, custom services, too, are allowed), too, has to be imported and provided to this service. 
+Environment (details see below) and a token service (Ionic Storage, Cookie Service, or something similar, custom services, too, are allowed), too, has to be imported and provided to this service. In the readme you find examples for an Angular and an Ionic Token service. 
 
 ```ts
 import { DrupalModule } from '@attus/drupal';
