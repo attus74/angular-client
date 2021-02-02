@@ -39,6 +39,38 @@ import { environment } from '../environments/environment';
 export class AppModule {}
 ```
 
+### Ionic Example 
+```
+npm i @attus/ionic-storage
+```
+```ts
+import { AngularClientModule } from '@attus/angular-client';
+import { IonicDataStorageModule, IonicTokenService } from '@attus/ionic-storage';
+
+import { environment } from '../environments/environment';
+
+@NgModule({
+  imports: [
+    IonicModule.forRoot(), 
+    AngularClientModule,
+    IonicDataStorageModule,
+  ],
+  providers: [
+    IonicTokenService,
+    {
+      provide: 'ANGULAR_CLIENT_TOKEN_SERVICE',
+      useClass: IonicTokenService,
+    },
+    {
+      provide: 'ANGULAR_CLIENT_CONFIG',
+      useValue: environment.apiClient,
+    }
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+```
+
 Environment must have API connection parameters:
 ```ts
 export const environment = {
