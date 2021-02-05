@@ -29,7 +29,7 @@ export class AngularClient {
 
   initialize() {
     this.refreshToken();
-    return() => console.info('Drupal Service wurde initialisiert');
+    return() => console.info('API Client Initialized');
   }
 
   /**
@@ -61,7 +61,7 @@ export class AngularClient {
     this.userLoginStatus.next(-1);
     this.authorization = null;
     this.tokenService.deleteRefreshToken().then(() => {
-      console.info('Veraltetes Refresh Token wurde entfernt');
+      console.info('Invalid Refresh Token removed');
     });
   }
 
