@@ -119,6 +119,17 @@ export class MyComponent implements OnInit {
     return this.drupal.get(path, options);
   }
 
+  /**
+   * GET Request with query parameter
+   */
+  getMyDataWithQuery(id: string, myParam: number): Observable<MyData> {
+    const options = this.apiClient.getHttpOptions();
+    options.setAuthorization();
+    options.setParam('myParam', myParam);
+    const path: string = 'my/data/' + id;
+    return this.drupal.get(path, options);
+  }
+
   loginUser(username: string, password: string): void {
     // There is no direct answer, but you can subscribe the result, see getUserLoginStatus()
     this.apiClient.login(username, password);
