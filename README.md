@@ -1,6 +1,11 @@
 # Anguilar API Client
 
 [![GitHub release](https://img.shields.io/github/release/attus74/angular-client.svg)](https://GitHub.com/attus74/angular-client/releases/)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/attus74/angular-client/graphs/commit-activity)
+[![Npm package version](https://badgen.net/npm/v/@attus/angular-client)](https://npmjs.com/package/@attus/angular-client)
+[![Npm package license](https://badgen.net/npm/license/@attus/angular-client)](https://npmjs.com/package/@attus/angular-client)
+[![GitHub issues](https://img.shields.io/github/issues/attus74/angular-client.svg)](https://GitHub.com/Naereen/StrapDown.js/issues/)
+
 
 ## A library for Angular as Web API Client
 
