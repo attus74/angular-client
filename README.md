@@ -1,13 +1,13 @@
-# Drupal
+# Anguilar API Client
 
 [![GitHub release](https://img.shields.io/github/release/attus74/angular-client.svg)](https://GitHub.com/attus74/angular-client/releases/)
 
 ## A library for Angular as Web API Client
 
-**This library may be applied n Angular 10 (Ionic included) or 11.**
+**This library version may be applied in Angular 12 or 13**
 
 This modul has to be imported. 
-Environment (details see below) and a token service (Ionic Storage, Cookie Service, or something similar, custom services, too, are allowed), too, has to be imported and provided to this service. In the readme you find examples for an Angular and an Ionic Token service. 
+Environment (details see below) and a token service (Ionic Storage, Cookie Service, or something similar, custom services, too, are allowed), too, has to be imported and provided to this service (except for you don't need authorisation). In the readme you find examples for an Angular and an Ionic Token service. 
 
 ### Angular Example
 
